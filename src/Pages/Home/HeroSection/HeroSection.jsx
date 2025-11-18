@@ -1,5 +1,5 @@
 import React from "react";
-import img1 from "../../../assets/Images/Vegetable.png";
+import img1 from "../../../assets/Images/vegetable.png";
 import { useState } from "react";
 import img2 from "../../../assets/Images/vegetable2.png";
 import { GrNext } from "react-icons/gr";
