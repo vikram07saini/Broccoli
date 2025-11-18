@@ -1,0 +1,62 @@
+/* header navbar hover css */
+/* home hover css is here */
+.home-hover {
+  display: none;
+  position: absolute;
+ top:30px; 
+}
+.home:hover .home-hover {
+  display: block;
+}
+/* about hover css is here */
+.about-hover{
+  display: none;
+  position: absolute;
+  top:30px;
+}
+.about:hover .about-hover{
+  display: block;
+}
+/* shop hover is here */
+.shop-hover{
+  display:none;
+  position:absolute;
+  top:30px;
+  
+}
+.shop:hover .shop-hover{
+  display: block;
+}
+/* News hover is here */
+.news-hover {
+  display: none;
+  position: absolute;
+  top: 30px;
+}
+
+.news:hover .news-hover {
+  display: block;
+}
+/* Pages hover is here */
+.pages-hover{
+  display: none;
+  position: absolute;
+  top:30px;
+}
+.pages:hover .pages-hover{
+  display:flex;
+  justify-items: center;
+  
+  right:-300px;
+}
+.user-hover{
+  display: none;
+  position: absolute;
+  top:120px;
+}
+.User:hover .user-hover{
+  display: block;
+
+  right:100px;
+  
+}
