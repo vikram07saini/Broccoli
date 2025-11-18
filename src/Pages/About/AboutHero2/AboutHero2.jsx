@@ -3,7 +3,7 @@ import { FaHandHoldingHeart } from "react-icons/fa";
 import { FaCarrot } from "react-icons/fa6";
 import { MdOutlineCrueltyFree } from "react-icons/md";
 
-import img1 from '../../../assets/Images/AboutUs1.png'
+import img1 from '../../../assets/Images/aboutUs1.png'
 import img2 from '../../../assets/Images/AboutUs2.png'
 import img3 from '../../../assets/Images/AboutUs3.png'
 
