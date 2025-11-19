@@ -3,6 +3,7 @@ import Header from "./Header/Header";
 import Footer from "./Footer/Footer";
 import { Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
+import ScrollToTop from "../Pages/ScrollToTop/ScrollToTop";  
 
 const Applayout = () => {
   const [isScrolled, setisScrolled] = useState(false);
@@ -17,18 +18,20 @@ const Applayout = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
   return (
     <>
+      <ScrollToTop />   
+
       <div className="relative">
-          <Header />
+        <Header />
         <div className="flex-grow">
           <Outlet />
         </div>
-        <div>
-          <Footer />
-        </div>
+        <Footer />
       </div>
     </>
   );
 };
+
 export default Applayout;
