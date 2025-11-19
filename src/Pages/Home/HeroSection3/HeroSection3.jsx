@@ -7,6 +7,7 @@ import broccoliimg from "../../../assets/Images/broccoliimg.png";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const handleCartItem = (item) => {
   const normalizedItem = {
@@ -30,6 +31,13 @@ const HeroSection3 = () => {
   const [isDriedFoodOpen, SetDriedFoodOpen] = useState(false);
   const [isBreadcakeOpen, SetBreadCakeOpen] = useState(false);
   const [isFishMeatOpen, SetFishMeatOpen] = useState(false);
+  
+  // Carousel states for each category
+  const [currentFoodIndex, setCurrentFoodIndex] = useState(0);
+  const [currentVegetableIndex, setCurrentVegetableIndex] = useState(0);
+  const [currentDriedFoodIndex, setCurrentDriedFoodIndex] = useState(0);
+  const [currentBreadCakeIndex, setCurrentBreadCakeIndex] = useState(0);
+  const [currentFishMeatIndex, setCurrentFishMeatIndex] = useState(0);
 
   const foodProduct = [
     {
@@ -323,9 +331,55 @@ const HeroSection3 = () => {
       icon3: <CiHeart />,
     },
   ];
+
+  // Navigation functions for each category
+  const nextSlide = (category, length) => {
+    switch(category) {
+      case 'food':
+        setCurrentFoodIndex((prevIndex) => (prevIndex + 1) % length);
+        break;
+      case 'vegetable':
+        setCurrentVegetableIndex((prevIndex) => (prevIndex + 1) % length);
+        break;
+      case 'dried':
+        setCurrentDriedFoodIndex((prevIndex) => (prevIndex + 1) % length);
+        break;
+      case 'bread':
+        setCurrentBreadCakeIndex((prevIndex) => (prevIndex + 1) % length);
+        break;
+      case 'fish':
+        setCurrentFishMeatIndex((prevIndex) => (prevIndex + 1) % length);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const prevSlide = (category, length) => {
+    switch(category) {
+      case 'food':
+        setCurrentFoodIndex((prevIndex) => (prevIndex - 1 + length) % length);
+        break;
+      case 'vegetable':
+        setCurrentVegetableIndex((prevIndex) => (prevIndex - 1 + length) % length);
+        break;
+      case 'dried':
+        setCurrentDriedFoodIndex((prevIndex) => (prevIndex - 1 + length) % length);
+        break;
+      case 'bread':
+        setCurrentBreadCakeIndex((prevIndex) => (prevIndex - 1 + length) % length);
+        break;
+      case 'fish':
+        setCurrentFishMeatIndex((prevIndex) => (prevIndex - 1 + length) % length);
+        break;
+      default:
+        break;
+    }
+  };
+
   const ProductCard = ({ item, shadowColor = "shadow-green-5911" }) => (
     <div
-      className="relative group bg-white border rounded-xl overflow-hidden shadow-lg transform transition-transform duration-500 hover:scale-105 w-full max-w-[280px] sm:max-w-[300px] lg:max-w-[250px] xl:max-w-[280px]"
+      className="relative group bg-white border rounded-xl overflow-hidden shadow-lg transform transition-transform duration-500 hover:scale-105 w-full max-w-[280px] mx-auto"
       style={{ 
         boxShadow: shadowColor.includes('shadow-') ? '' : `0 10px 25px ${shadowColor}`
       }}
@@ -333,7 +387,7 @@ const HeroSection3 = () => {
       <div className="relative flex justify-center">
         <Link to="/Shop">
           <img
-            className="w-full h-[200px] sm:h-[220px] md:h-[240px] lg:h-[200px] xl:h-[220px] object-cover"
+            className="w-full h-[200px] sm:h-[220px] md:h-[240px] object-cover"
             src={item.img}
             alt={item.productname}
           />
@@ -366,6 +420,51 @@ const HeroSection3 = () => {
       </div>
     </div>
   );
+
+  // Carousel component for mobile
+  const ProductCarousel = ({ items, category, shadowColor }) => {
+    const currentIndex = 
+      category === 'food' ? currentFoodIndex :
+      category === 'vegetable' ? currentVegetableIndex :
+      category === 'dried' ? currentDriedFoodIndex :
+      category === 'bread' ? currentBreadCakeIndex :
+      currentFishMeatIndex;
+
+    return (
+      <div className="relative">
+        {/* Mobile Carousel */}
+        <div className="block sm:hidden">
+          <div className="flex justify-center">
+            <ProductCard item={items[currentIndex]} shadowColor={shadowColor} />
+          </div>
+          <div className="flex justify-center items-center mt-4 gap-4">
+            <button
+              onClick={() => prevSlide(category, items.length)}
+              className="bg-green-5911 text-white p-2 rounded-full hover:bg-green-700 transition-colors"
+            >
+              <ChevronLeft size={20} />
+            </button>
+            <span className="text-sm font-medium">
+              {currentIndex + 1} / {items.length}
+            </span>
+            <button
+              onClick={() => nextSlide(category, items.length)}
+              className="bg-green-5911 text-white p-2 rounded-full hover:bg-green-700 transition-colors"
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
+        </div>
+
+        {/* Desktop Grid */}
+        <div className="hidden sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 justify-items-center">
+          {items.map((item, index) => (
+            <ProductCard key={index} item={item} shadowColor={shadowColor} />
+          ))}
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="mb-9 px-4 sm:px-6 lg:px-8">
@@ -460,39 +559,39 @@ const HeroSection3 = () => {
       </div>
       <div className="mt-8 sm:mt-10 lg:mt-12">
         {isFoodOpen && (
-          <div className="cursor-pointer justify-items-center grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-            {foodProduct.map((item, index) => (
-              <ProductCard key={index} item={item} shadowColor="shadow-green-5911" />
-            ))}
-          </div>
+          <ProductCarousel 
+            items={foodProduct} 
+            category="food" 
+            shadowColor="shadow-green-5911" 
+          />
         )}
         {isVegetableOpen && (
-          <div className="cursor-pointer justify-items-center grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-            {VegetableProduct.map((item, index) => (
-              <ProductCard key={index} item={item} shadowColor="#ef4444" />
-            ))}
-          </div>
+          <ProductCarousel 
+            items={VegetableProduct} 
+            category="vegetable" 
+            shadowColor="#ef4444" 
+          />
         )}
         {isDriedFoodOpen && (
-          <div className="cursor-pointer justify-items-center grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-            {DriedFoods.map((item, index) => (
-              <ProductCard key={index} item={item} shadowColor="#000000" />
-            ))}
-          </div>
+          <ProductCarousel 
+            items={DriedFoods} 
+            category="dried" 
+            shadowColor="#000000" 
+          />
         )}
         {isBreadcakeOpen && (
-          <div className="cursor-pointer justify-items-center grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-            {BreadCake.map((item, index) => (
-              <ProductCard key={index} item={item} shadowColor="#059669" />
-            ))}
-          </div>
+          <ProductCarousel 
+            items={BreadCake} 
+            category="bread" 
+            shadowColor="#059669" 
+          />
         )}
         {isFishMeatOpen && (
-          <div className="cursor-pointer justify-items-center grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-            {FishMeat.map((item, index) => (
-              <ProductCard key={index} item={item} shadowColor="#86198f" />
-            ))}
-          </div>
+          <ProductCarousel 
+            items={FishMeat} 
+            category="fish" 
+            shadowColor="#86198f" 
+          />
         )}
       </div>
     </div>
