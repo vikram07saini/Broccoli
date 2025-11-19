@@ -32,7 +32,7 @@ const HeroSection3 = () => {
   const [isBreadcakeOpen, SetBreadCakeOpen] = useState(false);
   const [isFishMeatOpen, SetFishMeatOpen] = useState(false);
   
-  // Carousel states for each category
+ 
   const [currentFoodIndex, setCurrentFoodIndex] = useState(0);
   const [currentVegetableIndex, setCurrentVegetableIndex] = useState(0);
   const [currentDriedFoodIndex, setCurrentDriedFoodIndex] = useState(0);
@@ -332,7 +332,6 @@ const HeroSection3 = () => {
     },
   ];
 
-  // Navigation functions for each category
   const nextSlide = (category, length) => {
     switch(category) {
       case 'food':
