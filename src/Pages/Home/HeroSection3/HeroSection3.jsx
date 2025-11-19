@@ -420,7 +420,7 @@ const HeroSection3 = () => {
     </div>
   );
 
-  // Carousel component for mobile
+
   const ProductCarousel = ({ items, category, shadowColor }) => {
     const currentIndex = 
       category === 'food' ? currentFoodIndex :
@@ -431,7 +431,7 @@ const HeroSection3 = () => {
 
     return (
       <div className="relative">
-        {/* Mobile Carousel */}
+      
         <div className="block sm:hidden">
           <div className="flex justify-center">
             <ProductCard item={items[currentIndex]} shadowColor={shadowColor} />
@@ -454,8 +454,6 @@ const HeroSection3 = () => {
             </button>
           </div>
         </div>
-
-        {/* Desktop Grid */}
         <div className="hidden sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 justify-items-center">
           {items.map((item, index) => (
             <ProductCard key={index} item={item} shadowColor={shadowColor} />
